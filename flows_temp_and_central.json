@@ -1,0 +1,285 @@
+[
+    {
+        "id": "c6b7d89ce3c37660",
+        "type": "tab",
+        "label": "DHT11_Send_Messages",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7186bd243bc5fac6",
+        "type": "inject",
+        "z": "c6b7d89ce3c37660",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "c6ae333bc4e4570a"
+            ]
+        ]
+    },
+    {
+        "id": "2da33db6645c2a18",
+        "type": "debug",
+        "z": "c6b7d89ce3c37660",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c6ae333bc4e4570a",
+        "type": "rpi-dht22",
+        "z": "c6b7d89ce3c37660",
+        "name": "DHT11",
+        "topic": "rpi-dht11",
+        "dht": "11",
+        "pintype": "0",
+        "pin": "4",
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "2da33db6645c2a18",
+                "c79fd360010bc14b",
+                "e1b13334d8a6342b"
+            ]
+        ]
+    },
+    {
+        "id": "8df3f571bbc9e776",
+        "type": "debug",
+        "z": "c6b7d89ce3c37660",
+        "name": "temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "79bfaf88e56484cb",
+        "type": "debug",
+        "z": "c6b7d89ce3c37660",
+        "name": "humidity",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "c79fd360010bc14b",
+        "type": "function",
+        "z": "c6b7d89ce3c37660",
+        "name": "temperature",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "8df3f571bbc9e776",
+                "48915407eeae6b01",
+                "ba62358ff946dcba"
+            ]
+        ]
+    },
+    {
+        "id": "e1b13334d8a6342b",
+        "type": "function",
+        "z": "c6b7d89ce3c37660",
+        "name": "humidity",
+        "func": "msg.payload = msg.humidity;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "79bfaf88e56484cb",
+                "599448a70ca39add",
+                "19862c458b97e3d8"
+            ]
+        ]
+    },
+    {
+        "id": "19862c458b97e3d8",
+        "type": "mqtt out",
+        "z": "c6b7d89ce3c37660",
+        "name": "",
+        "topic": "humidity",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1e8ec4c6a2c348e9",
+        "x": 960,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ba62358ff946dcba",
+        "type": "mqtt out",
+        "z": "c6b7d89ce3c37660",
+        "name": "",
+        "topic": "temperature",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1e8ec4c6a2c348e9",
+        "x": 970,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "599448a70ca39add",
+        "type": "ui_gauge",
+        "z": "c6b7d89ce3c37660",
+        "name": "humidity",
+        "group": "900eaf7bfa1e684a",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Humidité",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 680,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "48915407eeae6b01",
+        "type": "ui_gauge",
+        "z": "c6b7d89ce3c37660",
+        "name": "temperature",
+        "group": "900eaf7bfa1e684a",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 690,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "1e8ec4c6a2c348e9",
+        "type": "mqtt-broker",
+        "name": "mqtt_broker",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "900eaf7bfa1e684a",
+        "type": "ui_group",
+        "name": "Moniteurs Hackbox Temperature",
+        "tab": "23f85a4153ec7dd3",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "23f85a4153ec7dd3",
+        "type": "ui_tab",
+        "name": "Hackbox Temperature",
+        "icon": "dashboard",
+        "order": "1",
+        "disabled": false,
+        "hidden": false
+    }
+]
