@@ -11,7 +11,7 @@ npm install -g --unsafe-perm node-red
 `sudo apt install mosquitto
 sudo apt install mosquitto_clients`
 
-##Repertoires
+## Repertoires
 - Importer le fichier flows_temp_central.json dans l'interface Node Red
 - Déplacer les fichiers mosquitto.conf et passwordfile dans /etc/mosquitto/
 
